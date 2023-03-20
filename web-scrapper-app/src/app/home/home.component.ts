@@ -74,9 +74,9 @@ export class HomeComponent {
     }
 
     generateAudio() {
-        // console.log('start');
-        // const utter=new SpeechSynthesisUtterance(this.resultArticle);
-        // this.speechSynthesis.speak(utter);
+        console.log('start');
+        const utter=new SpeechSynthesisUtterance(this.resultArticle);
+        this.speechSynthesis.speak(utter);
     }
 
     updateUser() {
