@@ -1,0 +1,64 @@
+﻿<!-- <div class="p-4">
+    <div class="container">
+        
+        <h1>Hi {{user.tokenBalance}}!</h1>
+        <p>You're logged in with Search Engine!!</p>
+        <p><a routerLink="/users">Manage Users</a></p>
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching by a keyword">
+        <br>
+        <button class="btn btn-primary btn-sm" (click)="submitForm()">Search</button>
+        <br>
+        <br>
+        <ul>
+            <li *ngFor="let name of resultKeywords">
+                <button class="btn btn-outline-dark" (click)="submitArticle(name)">{{name}}</button> 
+            </li>
+        </ul> 
+        
+    </div>
+</div> -->
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait. </p>  
+</ngx-spinner> -->
+
+<div class="p-4">
+    <div class="container">
+        <h1>Hi {{user.firstName}}!</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="keywords">Search Text</label>
+                    <input type="text" formControlName="keywords" class="form-control" placeholder="Start searching by a keyword" [ngClass]="{ 'is-invalid': submitted && f.keywords.errors }" />
+                    <div *ngIf="submitted && f.keywords.errors" class="invalid-feedback">
+                        <div *ngIf="f.keywords.errors.required">Minimum one keyword is required</div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <label for="number">Number of Articles</label>
+                    <input type="text" formControlName="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" />
+                    <div *ngIf="submitted && f.number.errors" class="invalid-feedback">
+                        <div *ngIf="f.number.errors.required">Number of Articles is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Search
+                </button>
+            </div>
+        </form>
+        <h2 *ngIf="resultKeywords && resultKeywords.length > 0" >People also ask </h2><span *ngIf="loadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
+        <ul>
+            <li *ngFor="let name of resultKeywords">
+                <button class="btn btn-outline-dark" (click)="submitArticle(name)">
+                    {{name}}
+                </button> 
+            </li>
+        </ul> 
+        {{this.resultArticle}}
+
+        <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateAudio()">Generate Audio</button>
+
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿<h1>Profile: </h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">First Name</th>
+            <th style="width: 30%">Last Name</th>
+            <th style="width: 30%">Username</th>
+            <th style="width: 30%">Token Balance</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{userLogged.firstName}}</td>
+            <td>{{userLogged.lastName}}</td>
+            <td>{{userLogged.username}}</td>
+            <td>{{userLogged.tokenBalance}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{userLogged.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
