@@ -59,11 +59,25 @@ export class HomeComponent {
               });
     }
 
-    submitArticle(name:string) {
+    submitSimpleArticle(name:string) {
         this.loadingArticle=true;
         var formData: any = new FormData();
         formData.append('query', name);
         this.httpClient.post(`${API_URL}/generate_simple_article`, formData)
+        .subscribe((data:any) => {
+            this.loadingArticle=false;
+            this.resultArticle=data;
+            this.user.tokenBalance--;
+            this.updateUser();
+            this.alertService.success('Token Balance has been reduced by 1', { keepAfterRouteChange: true });
+        });
+    }
+
+    submitArticle(name:string) {
+        this.loadingArticle=true;
+        var formData: any = new FormData();
+        formData.append('query', name);
+        this.httpClient.post(`${API_URL}/generate_article`, formData)
         .subscribe((data:any) => {
             this.loadingArticle=false;
             this.resultArticle=data;

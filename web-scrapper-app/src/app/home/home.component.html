@@ -51,9 +51,14 @@
         <h2 *ngIf="resultKeywords && resultKeywords.length > 0" >People also ask </h2><span *ngIf="loadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
         <ul>
             <li *ngFor="let name of resultKeywords">
-                <button class="btn btn-outline-dark" (click)="submitArticle(name)">
-                    {{name}}
+                {{name}}
+                <button class="btn btn-outline-dark" (click)="submitSimpleArticle(name)">
+                    generate Simple Article
                 </button> 
+                <button class="btn btn-outline-dark" (click)="submitArticle(name)">
+                    generate  Article
+                </button> 
+                <br>
             </li>
         </ul> 
         {{this.resultArticle}}
