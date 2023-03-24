@@ -6,6 +6,8 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LayoutComponent } from './layout.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
+import { SafePipe } from '../safe.pipe';
+//import {SafePipe} from './safe.pipe'
 
 @NgModule({
     imports: [
@@ -16,7 +18,8 @@ import { RegisterComponent } from './register.component';
     declarations: [
         LayoutComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        SafePipe
     ]
 })
 export class AccountModule { }

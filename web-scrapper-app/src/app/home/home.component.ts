@@ -2,14 +2,18 @@
 import { API_URL } from '../env';
 import { User } from '../_models';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";  
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AccountService,AlertService } from '../_services';
+import { SafeUrl } from '@angular/platform-browser';
 
-@Component({ templateUrl: 'home.component.html' })
+import { DomSanitizer} from '@angular/platform-browser';
+
+@Component({ templateUrl: 'home.component.html',styleUrls: ['home.component.css']})
 export class HomeComponent {
+    @ViewChildren('audio') audioElms!: ElementRef;
     user: User;
     //searchText: any;
     resultKeywords: any[] = [];
@@ -18,12 +22,18 @@ export class HomeComponent {
     loading:boolean;
     loadingArticle:boolean;
     submitted = false;
-    audioUrl:any;
-
+    url = window.URL;
+    returnUrl:any;
+    audioUrl: SafeUrl;
+    isPaused = false;
+    smapleURL:string;
+    articleAudioGenerated:boolean=false;
     speechSynthesis = window.speechSynthesis;
+    audioSource = '';
+    isLoadingArticle:boolean=false;
+    
 
-
-    constructor(private formBuilder: FormBuilder,private accountService: AccountService,private httpClient: HttpClient,private SpinnerService: NgxSpinnerService,private alertService: AlertService) {
+    constructor(private sanitizer: DomSanitizer,private formBuilder: FormBuilder,private accountService: AccountService,private httpClient: HttpClient,private SpinnerService: NgxSpinnerService,private alertService: AlertService) {
         this.user = this.accountService.userValue;
     }
 
@@ -34,11 +44,19 @@ export class HomeComponent {
         });
     }
 
-    // submitForm() {
-    //     this.httpClient.get<string[]>(`${API_URL}/keywords/${this.searchText}`).subscribe((data: any[]) => {
-    //         this.resultKeywords=data;
-    //     })
-    // }
+    onPlayClick(audio: HTMLAudioElement) {
+        if (!this.isPaused) {
+         audio.play();
+         this.isPaused = true;
+        } else {
+         audio.pause();
+         this.isPaused = false;
+        }
+    }
+       
+    onPause() {
+        this.isPaused = false;
+    }
 
     get f() { return this.form.controls; }
 
@@ -47,8 +65,10 @@ export class HomeComponent {
         if (this.form.invalid) {
             return;
         }
-        //this.SpinnerService.show(); 
+        this.resultArticle='';
+        this.resultKeywords=[];
         this.loading=true;
+        this.articleAudioGenerated=false;
         var formData: any = new FormData();
         formData.append('keywords', this.form.value.keywords);
         formData.append('number', this.form.value.number);
@@ -56,10 +76,10 @@ export class HomeComponent {
               .subscribe((data:any) => {
                 this.loading=false;
                 this.resultKeywords=data;
-              });
+            });
     }
 
-    submitSimpleArticle(name:string) {
+    generateSimpleArticle(name:string) {
         this.loadingArticle=true;
         var formData: any = new FormData();
         formData.append('query', name);
@@ -73,7 +93,7 @@ export class HomeComponent {
         });
     }
 
-    submitArticle(name:string) {
+    generateLongArticle(name:string) {
         this.loadingArticle=true;
         var formData: any = new FormData();
         formData.append('query', name);
@@ -88,9 +108,16 @@ export class HomeComponent {
     }
 
     generateAudio() {
-        console.log('start');
-        const utter=new SpeechSynthesisUtterance(this.resultArticle);
-        this.speechSynthesis.speak(utter);
+        this.articleAudioGenerated=false;
+        this.isLoadingArticle=true;
+        var formDatas: any = new FormData();
+        formDatas.append('text', this.resultArticle);
+        this.httpClient.post(`${API_URL}/generate_video`, formDatas,{ responseType: 'blob' })
+        .subscribe((data:any) => {
+            this.audioSource=URL.createObjectURL(data);
+            this.articleAudioGenerated=true;
+            this.isLoadingArticle=false;
+        });
     }
 
     updateUser() {
@@ -100,5 +127,8 @@ export class HomeComponent {
                 data => {});
     }
 
-    
+    generateVideo(){
+        
+    }
+
 }

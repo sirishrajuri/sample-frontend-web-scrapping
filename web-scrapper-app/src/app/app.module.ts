@@ -38,6 +38,8 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from "ngx-spinner";  
+import {SafePipe} from './safe.pipe'
+
 
 @NgModule({
     imports: [
@@ -52,7 +54,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     declarations: [
         AppComponent,
         AlertComponent,
-        HomeComponent
+        HomeComponent,
+        SafePipe
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

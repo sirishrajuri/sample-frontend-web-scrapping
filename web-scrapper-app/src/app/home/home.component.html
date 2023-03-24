@@ -48,22 +48,56 @@
                 </button>
             </div>
         </form>
-        <h2 *ngIf="resultKeywords && resultKeywords.length > 0" >People also ask </h2><span *ngIf="loadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
+    </div>  
+</div>
+
+        <h2 *ngIf="resultKeywords && resultKeywords.length > 0" >People also ask:  <span *ngIf="loadingArticle" class="spinner-border spinner-border-sm mr-1"></span> </h2> 
+
+<div class="main-content">
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
         <ul>
             <li *ngFor="let name of resultKeywords">
                 {{name}}
-                <button class="btn btn-outline-dark" (click)="submitSimpleArticle(name)">
-                    generate Simple Article
+                <br>
+                <button class="btn btn-outline-dark" (click)="generateSimpleArticle(name)">
+                    Generate Simple Article
                 </button> 
-                <button class="btn btn-outline-dark" (click)="submitArticle(name)">
-                    generate  Article
+                <button class="btn btn-outline-dark" (click)="generateLongArticle(name)">
+                    Generate Long Article
                 </button> 
+                <br>
                 <br>
             </li>
         </ul> 
-        {{this.resultArticle}}
-
-        <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateAudio()">Generate Audio</button>
-
+      </div>
+      <div class="col-md-9" >
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr><h5> {{this.resultArticle}} </h5></tr>
+                    <tr>
+                        <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateAudio()">
+                            <span *ngIf="isLoadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
+                            Generate Audio
+                        </button>
+                    </tr>
+                    <tr>
+                        <audio [src]="audioSource | safe:'url'" controls *ngIf="articleAudioGenerated"></audio>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="row"> -->
+            
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+            
+        <!-- </div> -->
+      </div>
     </div>
 </div>
+</div>
+
+
