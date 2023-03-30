@@ -7,7 +7,12 @@
     height: 300px
   } */
 
-  th, td {
+  table th, td {
     border: 1px solid black;
     border-style:solid;
+  }
+
+  /* div {border-style: solid;} */
+  styleBorder{
+    border-style: solid;
   }
