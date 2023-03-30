@@ -39,7 +39,7 @@
     <div class="form-row">
         <div class="form-group col">
             <label for="tokenBalance">Token Balance</label>
-            <input type="text" formControlName="tokenBalance" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tokenBalance.errors }"  />
+            <input type="text" formControlName="tokenBalance" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tokenBalance.errors }"  readonly="true"/>
         </div>
     </div>
     <div class="form-group">

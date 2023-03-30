@@ -1,0 +1,33 @@
+﻿<div class="container">
+   <h1> Add Token Balance </h1><input type="number" id="tokenBal" name="tokenBal" value="500" [(ngModel)]="tokenBal">
+    <form action="" >    
+        <br>
+        <h2>Payment Information</h2>
+            <div>
+                Accepted Cards <br>
+                <div>
+                    Visa, Rupay, MasterCard
+                </div>
+                <br>
+                Card Type: *
+                <select name="card_type" id="card_type" required>
+                    <option value="">--Select a Card Type</option> 
+                    <option value="visa">Visa</option>
+                    <option value="rupay">Rupay</option>
+                    <option value="mastercard">MasterCard</option>
+                </select>
+            </div>
+            <div>
+                Card Number: * <input type="number" name="card_number" id="card_number"
+                    placeholder="5555-6666-7777-8888" required>
+            </div>
+            <div>
+                Expiration Date: * <input type="date" name="exp_date" id="exp_date" required>
+            </div>
+            <div>
+                CVV: * <input type="password" name="cvv" id="cvv" placeholder="123">
+            </div>
+            <a routerLink="/users" class="btn btn-link" (click)="UpdateBalance()">Pay Now</a>
+            <a routerLink="/users" class="btn btn-link" >Cancel</a>
+    </form>
+</div>

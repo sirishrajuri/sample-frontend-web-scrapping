@@ -1,4 +1,4 @@
-﻿import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../env';
 import { User } from '../_models';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";  
@@ -30,9 +30,10 @@ export class HomeComponent {
     articleAudioGenerated:boolean=false;
     speechSynthesis = window.speechSynthesis;
     audioSource = '';
+    videoSource = '';
     isLoadingArticle:boolean=false;
+    auth = ('c2h1YmJ1MDAxQGdtYWlsLmNvbQ:A-FrH9ru8DujZMWeN5KP2');
     
-
     constructor(private sanitizer: DomSanitizer,private formBuilder: FormBuilder,private accountService: AccountService,private httpClient: HttpClient,private SpinnerService: NgxSpinnerService,private alertService: AlertService) {
         this.user = this.accountService.userValue;
     }
@@ -127,8 +128,19 @@ export class HomeComponent {
                 data => {});
     }
 
-    generateVideo(){
-        
+    generateVideo() {
+        this.articleAudioGenerated=false;
+        this.isLoadingArticle=true;
+        var formDatas: any = new FormData();
+        formDatas.append('text', this.resultArticle);
+        this.httpClient.post(`${API_URL}/generate_video`, formDatas,{ responseType: 'blob' })
+        .subscribe((data:any) => {
+            this.videoSource = URL.createObjectURL(data);
+            this.articleAudioGenerated=true;
+            this.isLoadingArticle=false;
+        });
     }
+    // 'accept': 'application/json',
 
+    
 }

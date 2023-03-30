@@ -23,7 +23,7 @@
 
 <div class="p-4">
     <div class="container">
-        <h1>Hi {{user.firstName}}!  Token Balance {{user.tokenBalance}}</h1>
+        <h1>Hi {{user.firstName}}!</h1>  <h3> Token Balance: {{user.tokenBalance}}</h3><br>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-row">
                 <div class="form-group col">
@@ -54,15 +54,16 @@
         <h2 *ngIf="resultKeywords && resultKeywords.length > 0" >People also ask:  <span *ngIf="loadingArticle" class="spinner-border spinner-border-sm mr-1"></span> </h2> 
 
 <div class="main-content">
-<div class="container-fluid">
+<div class="container-fluid" >
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3" >
+        <!-- style="border:1px solid black" -->
         <ul>
             <li *ngFor="let name of resultKeywords">
                 {{name}}
                 <br>
                 <button class="btn btn-outline-dark" (click)="generateSimpleArticle(name)">
-                    Generate Simple Article
+                    Generate Outline
                 </button> 
                 <button class="btn btn-outline-dark" (click)="generateLongArticle(name)">
                     Generate Long Article
@@ -78,13 +79,20 @@
                 <tbody>
                     <tr><h5> {{this.resultArticle}} </h5></tr>
                     <tr>
-                        <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateAudio()">
+                        <!-- <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateAudio()">
                             <span *ngIf="isLoadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
                             Generate Audio
+                        </button> -->
+                        <button class="btn btn-primary btn-sm" *ngIf="resultKeywords && resultKeywords.length > 0 && resultArticle"  (click)="generateVideo()">
+                            <span *ngIf="isLoadingArticle" class="spinner-border spinner-border-sm mr-1"></span>
+                            Generate Video
                         </button>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <audio [src]="audioSource | safe:'url'" controls *ngIf="articleAudioGenerated"></audio>
+                    </tr> -->
+                    <tr>
+                        <video width="320" height="240" [src]="videoSource | safe:'url'" controls *ngIf="articleAudioGenerated"></video>
                     </tr>
                 </tbody>
             </table>
